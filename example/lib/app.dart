@@ -22,6 +22,7 @@ class ExampleApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: r,
       onUnknownRoute: (settings) {
+        print(r);
         return MaterialPageRoute<void>(
           settings: settings,
           builder: (_) => BasePage(
