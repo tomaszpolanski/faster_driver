@@ -44,3 +44,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+example/linux/flutter/generated_plugin_registrant.h
+example/linux/flutter/generated_plugin_registrant.cc
