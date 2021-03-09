@@ -46,3 +46,6 @@ app.*.map.json
 /android/app/release
 example/linux/flutter/generated_plugin_registrant.h
 example/linux/flutter/generated_plugin_registrant.cc
+example/ios/Podfile
+example/macos/Podfile
+example/macos/Podfile.lock
