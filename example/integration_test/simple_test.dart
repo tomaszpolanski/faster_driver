@@ -1,12 +1,9 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:example/app.dart';
 import 'package:example/pages/page_1.dart';
 import 'package:example/routes.dart' as routes;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'screenshots.dart';
 
 void main() {
   group('Set of simple tests', () {
@@ -58,18 +55,4 @@ void main() {
       await tester.takeScreenshot('justwidget');
     });
   });
-}
-
-extension on WidgetTester {
-  Future<void> takeScreenshot(String name) async {
-    RenderRepaintBoundary boundary =
-        firstRenderObject(find.byType(RepaintBoundary));
-    final image = await boundary.toImage();
-    final byteData = await image.toByteData(format: ImageByteFormat.png);
-    final pngBytes = byteData.buffer.asUint8List();
-
-    final file = await File('${Directory.current.path}/screenshots/$name.png')
-        .create(recursive: true);
-    await file.writeAsBytes(pngBytes);
-  }
 }
