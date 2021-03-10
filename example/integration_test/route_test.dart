@@ -6,8 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
   group('Route navigation', () {
     [
       ...List.generate(
@@ -29,9 +27,9 @@ void main() {
 
   group('Small Route navigation', () {
     setUpAll(() {
-      appWindow
-        ..size = Size(500, 900)
-        ..show();
+      // appWindow
+      //   ..size = Size(500, 900)
+      //   ..show();
     });
     [
       ...List.generate(
