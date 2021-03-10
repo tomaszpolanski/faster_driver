@@ -1,5 +1,7 @@
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:example/app.dart';
 import 'package:example/routes.dart' as routes;
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -26,11 +28,10 @@ void main() {
   });
 
   group('Small Route navigation', () {
-    setUp(() {
-      // TODO causes timeout
-      // appWindow
-      //   ..size = Size(500, 900)
-      //   ..show();
+    setUpAll(() {
+      appWindow
+        ..size = Size(500, 900)
+        ..show();
     });
     [
       ...List.generate(

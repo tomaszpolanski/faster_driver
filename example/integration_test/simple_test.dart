@@ -1,6 +1,7 @@
 import 'package:example/app.dart';
 import 'package:example/pages/page_1.dart';
 import 'package:example/routes.dart' as routes;
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -31,5 +32,13 @@ void main() {
       await tester.pumpWidget(ExampleApp(route: routes.page1));
       expect(find.byType(Page1), findsOneWidget);
     });
+  });
+
+  group('just widgets', () {
+    testWidgets('single widget', (tester) async {
+      await tester.pumpWidget(Placeholder());
+      expect(find.byType(Placeholder), findsOneWidget);
+    });
+
   });
 }

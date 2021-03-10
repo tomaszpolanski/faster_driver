@@ -18,7 +18,7 @@ dev_dependencies:
     sdk: flutter
   integration_test: ^1.0.2
   test: ^1.16.5
-  bitsdojo_window: ^0.0.8
+  bitsdojo_window: ^0.0.9
 
 flutter:
   uses-material-design: true
