@@ -25,7 +25,31 @@ void main() {
       fileSystem.mockGetFiles = ['simple_test.dart'];
       tested = TestWriter(fileSystem);
 
-      tested.generateMainTest('main_tests.dart');
+      tested.generateMainTest('./main_tests.dart');
+
+      expect(fileSystem.mockCreateFile, content);
+    });
+
+    test('writes recursive tests', () {
+      const content = '''
+import 'package:integration_test/integration_test.dart';
+
+import 'simple_test.dart' as simple;
+import 'inner/recursive_test.dart' as inner_recursive;
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  simple.main();
+  inner_recursive.main();
+}
+''';
+      fileSystem.mockGetFiles = [
+        'simple_test.dart',
+        'inner/recursive_test.dart',
+      ];
+      tested = TestWriter(fileSystem);
+
+      tested.generateMainTest('./main_tests.dart');
 
       expect(fileSystem.mockCreateFile, content);
     });
