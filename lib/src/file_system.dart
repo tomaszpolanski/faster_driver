@@ -13,6 +13,10 @@ class FileSystem {
         .toList(growable: false);
   }
 
+  String getCurrentDir(String file) {
+    return File(file).parent.path;
+  }
+
   Future<void> createFile(
     Uri file, {
     required String content,

@@ -7,12 +7,15 @@ class TestWriter {
   final FileSystem _fileSystem;
 
   Future<void> generateMainTest(String path) async {
-    final root = p.dirname(path);
+    final root = _fileSystem.getCurrentDir(path);
+
     final files = _fileSystem
         .getFiles(
           Uri.directory(root),
           predicate: (path) => path.contains('_test.dart'),
         )
+        .map((f) => f.replaceAll(root, ''))
+        .map((f) => f[0] == '/' ? f.substring(1) : f)
         .toList();
     final sb = StringBuffer()
       ..writeln("import 'package:integration_test/integration_test.dart';")

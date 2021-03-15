@@ -11,7 +11,7 @@ void main() {
       fileSystem = _MockFileSystem();
     });
 
-    test('writes single test', () {
+    group('single', () {
       const content = '''
 import 'package:integration_test/integration_test.dart';
 
@@ -22,12 +22,44 @@ void main() {
   simple.main();
 }
 ''';
-      fileSystem.mockGetFiles = ['simple_test.dart'];
-      tested = TestWriter(fileSystem);
 
-      tested.generateMainTest('./main_tests.dart');
+      test('writes single test', () {
+        fileSystem.mockGetFiles = ['simple_test.dart'];
+        fileSystem.mockGetCurrentDir = '';
+        tested = TestWriter(fileSystem);
 
-      expect(fileSystem.mockCreateFile, content);
+        tested.generateMainTest('/main_tests.dart');
+
+        expect(fileSystem.mockCreateFile, content);
+      });
+
+      test('parses path properly on windows', () {
+        fileSystem.mockGetFiles = [
+          r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
+        ];
+        fileSystem.mockGetCurrentDir =
+            r'C:\Android\faster_driver\example\integration_test\';
+        tested = TestWriter(fileSystem);
+
+        tested.generateMainTest(
+            r'C:\Android\faster_driver\example\integration_test\main_tests.dart');
+
+        expect(fileSystem.mockCreateFile, content);
+      });
+
+      test('removes first slash', () {
+        fileSystem.mockGetFiles = [
+          '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/simple_test.dart',
+        ];
+        fileSystem.mockGetCurrentDir =
+            '/home/tomek/Documents/GitHub/faster_driver/example/integration_test';
+        tested = TestWriter(fileSystem);
+
+        tested.generateMainTest(
+            '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/main_tests.dart');
+
+        expect(fileSystem.mockCreateFile, content);
+      });
     });
 
     test('writes recursive tests', () {
@@ -47,6 +79,7 @@ void main() {
         'simple_test.dart',
         'inner/recursive_test.dart',
       ];
+      fileSystem.mockGetCurrentDir = '';
       tested = TestWriter(fileSystem);
 
       tested.generateMainTest('./main_tests.dart');
@@ -73,5 +106,12 @@ class _MockFileSystem implements FileSystem {
     bool recursive = true,
   }) {
     return mockGetFiles;
+  }
+
+  late String mockGetCurrentDir;
+
+  @override
+  String getCurrentDir(String file) {
+    return mockGetCurrentDir;
   }
 }

@@ -49,3 +49,4 @@ example/linux/flutter/generated_plugin_registrant.cc
 example/ios/Podfile
 example/macos/Podfile
 example/macos/Podfile.lock
+example/integration_test/main_tests.dart
