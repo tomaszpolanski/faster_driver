@@ -60,6 +60,20 @@ void main() {
 
         expect(fileSystem.mockCreateFile, content);
       });
+
+      test('removes first backslash on windows', () {
+        fileSystem.mockGetFiles = [
+          r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
+        ];
+        fileSystem.mockGetCurrentDir =
+            r'C:\Android\faster_driver\example\integration_test';
+        tested = TestWriter(fileSystem);
+
+        tested.generateMainTest(
+            r'C:\Android\faster_driver\example\integration_test\main_tests.dart');
+
+        expect(fileSystem.mockCreateFile, content);
+      });
     });
 
     test('writes recursive tests', () {

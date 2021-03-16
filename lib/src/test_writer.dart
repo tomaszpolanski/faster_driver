@@ -1,5 +1,4 @@
 import 'package:faster_driver/src/file_system.dart';
-import 'package:path/path.dart' as p;
 
 class TestWriter {
   TestWriter(this._fileSystem);
@@ -15,6 +14,7 @@ class TestWriter {
           predicate: (path) => path.contains('_test.dart'),
         )
         .map((f) => f.replaceAll(root, ''))
+        .map((f) => f.replaceAll(r'\', '/'))
         .map((f) => f[0] == '/' ? f.substring(1) : f)
         .toList();
     final sb = StringBuffer()
