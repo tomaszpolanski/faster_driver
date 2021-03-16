@@ -1,6 +1,19 @@
 import 'dart:io';
 
 class FileSystem {
+  String? fullPath(String path) {
+    final dir = Directory(path);
+    if (dir.existsSync()) {
+      return dir.absolute.path;
+    } else {
+      final file = File(path);
+      if (file.existsSync()) {
+        return file.absolute.path;
+      }
+    }
+    return null;
+  }
+
   List<String> getFiles(
     Uri directory, {
     required bool Function(String path) predicate,

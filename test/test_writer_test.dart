@@ -128,4 +128,9 @@ class _MockFileSystem implements FileSystem {
   String getCurrentDir(String file) {
     return mockGetCurrentDir;
   }
+
+  @override
+  String? fullPath(String path) {
+    return null;
+  }
 }
