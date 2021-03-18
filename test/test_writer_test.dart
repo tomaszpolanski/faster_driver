@@ -3,8 +3,6 @@ import 'package:faster_driver/src/test_writer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late TestWriter tested;
-
   group('generateMainTest', () {
     late _MockFileSystem fileSystem;
     setUp(() {
@@ -24,53 +22,55 @@ void main() {
 ''';
 
       test('writes single test', () {
-        fileSystem.mockGetFiles = ['simple_test.dart'];
-        fileSystem.mockGetCurrentDir = '';
-        tested = TestWriter(fileSystem);
+        fileSystem
+          ..mockGetFiles = ['simple_test.dart']
+          ..mockGetCurrentDir = '';
 
-        tested.generateMainTest('/main_tests.dart');
+        TestWriter(fileSystem).generateMainTest('/main_tests.dart');
 
         expect(fileSystem.mockCreateFile, content);
       });
 
       test('parses path properly on windows', () {
-        fileSystem.mockGetFiles = [
-          r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
-        ];
-        fileSystem.mockGetCurrentDir =
-            r'C:\Android\faster_driver\example\integration_test\';
-        tested = TestWriter(fileSystem);
+        fileSystem
+          ..mockGetFiles = [
+            r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
+          ]
+          ..mockGetCurrentDir =
+              r'C:\Android\faster_driver\example\integration_test\';
 
-        tested.generateMainTest(
-            r'C:\Android\faster_driver\example\integration_test\main_tests.dart');
+        TestWriter(fileSystem).generateMainTest(
+          r'C:\Android\faster_driver\example\integration_test\main_tests.dart',
+        );
 
         expect(fileSystem.mockCreateFile, content);
       });
 
       test('removes first slash', () {
-        fileSystem.mockGetFiles = [
-          '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/simple_test.dart',
-        ];
-        fileSystem.mockGetCurrentDir =
-            '/home/tomek/Documents/GitHub/faster_driver/example/integration_test';
-        tested = TestWriter(fileSystem);
-
-        tested.generateMainTest(
-            '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/main_tests.dart');
+        fileSystem
+          ..mockGetFiles = [
+            '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/simple_test.dart',
+          ]
+          ..mockGetCurrentDir =
+              '/home/tomek/Documents/GitHub/faster_driver/example/integration_test';
+        TestWriter(fileSystem).generateMainTest(
+          '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/main_tests.dart',
+        );
 
         expect(fileSystem.mockCreateFile, content);
       });
 
       test('removes first backslash on windows', () {
-        fileSystem.mockGetFiles = [
-          r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
-        ];
-        fileSystem.mockGetCurrentDir =
-            r'C:\Android\faster_driver\example\integration_test';
-        tested = TestWriter(fileSystem);
+        fileSystem
+          ..mockGetFiles = [
+            r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
+          ]
+          ..mockGetCurrentDir =
+              r'C:\Android\faster_driver\example\integration_test';
 
-        tested.generateMainTest(
-            r'C:\Android\faster_driver\example\integration_test\main_tests.dart');
+        TestWriter(fileSystem).generateMainTest(
+          r'C:\Android\faster_driver\example\integration_test\main_tests.dart',
+        );
 
         expect(fileSystem.mockCreateFile, content);
       });
@@ -89,14 +89,14 @@ void main() {
   inner_recursive.main();
 }
 ''';
-      fileSystem.mockGetFiles = [
-        'simple_test.dart',
-        'inner/recursive_test.dart',
-      ];
-      fileSystem.mockGetCurrentDir = '';
-      tested = TestWriter(fileSystem);
+      fileSystem
+        ..mockGetFiles = [
+          'simple_test.dart',
+          'inner/recursive_test.dart',
+        ]
+        ..mockGetCurrentDir = '';
 
-      tested.generateMainTest('./main_tests.dart');
+      TestWriter(fileSystem).generateMainTest('./main_tests.dart');
 
       expect(fileSystem.mockCreateFile, content);
     });

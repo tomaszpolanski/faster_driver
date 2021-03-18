@@ -19,16 +19,16 @@ class TestWriter {
         .toList();
     final sb = StringBuffer()
       ..writeln("import 'package:integration_test/integration_test.dart';")
-      ..writeln('')
+      ..writeln()
       ..writeln(_imports(files).join('\n'))
-      ..writeln('')
+      ..writeln()
       ..writeln(
         'void main() {\n'
         '  IntegrationTestWidgetsFlutterBinding.ensureInitialized();',
       )
       ..writeln(_mains(files).join('\n'))
       ..writeln('}');
-    _fileSystem.createFile(Uri.file(path), content: sb.toString());
+    await _fileSystem.createFile(Uri.file(path), content: sb.toString());
   }
 
   Iterable<String> _imports(List<String> files) sync* {
@@ -42,7 +42,7 @@ class TestWriter {
 
   Iterable<String> _mains(List<String> files) sync* {
     for (final file in files) {
-      yield "  ${_testName(file)}.main();";
+      yield '  ${_testName(file)}.main();';
     }
   }
 }
