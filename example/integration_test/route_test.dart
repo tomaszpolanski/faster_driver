@@ -1,11 +1,5 @@
-import 'dart:io';
-import 'dart:ui';
-
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:example/app.dart';
 import 'package:example/routes.dart' as routes;
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -19,6 +13,7 @@ void main() {
                 routes.page3,
                 routes.page4,
               ]).expand((element) => element),
+      // ignore: avoid_function_literals_in_foreach_calls
     ].forEach((route) {
       testWidgets(route, (tester) async {
         await tester.pumpWidget(ExampleApp(route: route));
@@ -43,6 +38,7 @@ void main() {
                 routes.page3,
                 routes.page4,
               ]).expand((element) => element),
+      // ignore: avoid_function_literals_in_foreach_calls
     ].forEach((route) {
       testWidgets(route, (tester) async {
         await tester.pumpWidget(ExampleApp(route: route));

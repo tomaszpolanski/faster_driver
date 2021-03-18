@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 extension WidgetTesterEx on WidgetTester {
   Future<void> takeScreenshot(String name) async {
     if (!kIsWeb) {
-      RenderRepaintBoundary boundary =
+      final RenderRepaintBoundary boundary =
           firstRenderObject(find.byType(RepaintBoundary));
       final image = await boundary.toImage();
       final byteData = await image.toByteData(format: ImageByteFormat.png);
