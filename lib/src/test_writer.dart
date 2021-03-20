@@ -1,19 +1,24 @@
 import 'package:faster_driver/src/file_system.dart';
+import 'package:path/path.dart' as p;
 
 class TestWriter {
   TestWriter(this._fileSystem);
 
   final FileSystem _fileSystem;
 
-  Future<void> generateMainTest(String path) async {
-    final root = _fileSystem.getCurrentDir(path);
+  Future<void> generateMainTest({
+    required String directory,
+    required String fileName,
+  }) async {
+    final path = p.join(directory, fileName);
+    final root = p.canonicalize(_fileSystem.getCurrentDir(path));
 
     final files = _fileSystem
         .getFiles(
           Uri.directory(root),
           predicate: (path) => path.contains('_test.dart'),
         )
-        .map((f) => f.replaceAll(root, ''))
+        .map((f) => p.relative(f, from: root))
         .map((f) => f.replaceAll(r'\', '/'))
         .map((f) => f[0] == '/' ? f.substring(1) : f)
         .toList();

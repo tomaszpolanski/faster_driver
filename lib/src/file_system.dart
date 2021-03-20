@@ -27,7 +27,7 @@ class FileSystem {
   }
 
   String getCurrentDir(String file) {
-    return File(file).parent.path;
+    return File(file).parent.absolute.path;
   }
 
   Future<void> createFile(

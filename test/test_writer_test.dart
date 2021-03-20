@@ -26,7 +26,10 @@ void main() {
           ..mockGetFiles = ['simple_test.dart']
           ..mockGetCurrentDir = '';
 
-        TestWriter(fileSystem).generateMainTest('/main_tests.dart');
+        TestWriter(fileSystem).generateMainTest(
+          directory: '/',
+          fileName: 'main_tests.dart',
+        );
 
         expect(fileSystem.mockCreateFile, content);
       });
@@ -40,7 +43,8 @@ void main() {
               r'C:\Android\faster_driver\example\integration_test\';
 
         TestWriter(fileSystem).generateMainTest(
-          r'C:\Android\faster_driver\example\integration_test\main_tests.dart',
+          directory: r'C:\Android\faster_driver\example\integration_test\',
+          fileName: 'main_tests.dart',
         );
 
         expect(fileSystem.mockCreateFile, content);
@@ -54,7 +58,9 @@ void main() {
           ..mockGetCurrentDir =
               '/home/tomek/Documents/GitHub/faster_driver/example/integration_test';
         TestWriter(fileSystem).generateMainTest(
-          '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/main_tests.dart',
+          directory:
+              '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/',
+          fileName: 'main_tests.dart',
         );
 
         expect(fileSystem.mockCreateFile, content);
@@ -69,7 +75,23 @@ void main() {
               r'C:\Android\faster_driver\example\integration_test';
 
         TestWriter(fileSystem).generateMainTest(
-          r'C:\Android\faster_driver\example\integration_test\main_tests.dart',
+          directory: r'C:\Android\faster_driver\example\integration_test\',
+          fileName: 'main_tests.dart',
+        );
+
+        expect(fileSystem.mockCreateFile, content);
+      });
+
+      test('uses current . dir properly', () {
+        fileSystem
+          ..mockGetFiles = [
+            '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/simple_test.dart',
+          ]
+          ..mockGetCurrentDir =
+              '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/.';
+        TestWriter(fileSystem).generateMainTest(
+          directory: '.',
+          fileName: 'main_tests.dart',
         );
 
         expect(fileSystem.mockCreateFile, content);
@@ -96,7 +118,8 @@ void main() {
         ]
         ..mockGetCurrentDir = '';
 
-      TestWriter(fileSystem).generateMainTest('./main_tests.dart');
+      TestWriter(fileSystem)
+          .generateMainTest(directory: '.', fileName: 'main_tests.dart');
 
       expect(fileSystem.mockCreateFile, content);
     });
