@@ -1,19 +1,20 @@
 library faster_driver;
 
-import 'dart:io';
-
+import 'package:faster_driver/src/argument_parser.dart';
 import 'package:faster_driver/src/file_system.dart';
 import 'package:faster_driver/src/test_writer.dart';
-import 'package:path/path.dart' as p;
 
-Future<void> main(List<String> paths) async {
-  final fs = FileSystem();
-  // print('WWW ${Directory.current.path}');
-  // print(fs.fullPath(
-  //   p.join('subfoldsdaer'),
-  // ));
-  final testWriter = TestWriter(fs);
-  await testWriter.generateMainTest(
-    p.join(Directory.current.path, 'main_tests.dart'),
-  );
+Future<void> main(List<String> args) async {
+  try {
+    final arguments = ArgumentParser().parse(args);
+    final fs = FileSystem();
+    final testWriter = TestWriter(fs);
+    await testWriter.generateMainTest(
+      directory: arguments.directory,
+      fileName: arguments.file,
+    );
+  } catch (e) {
+    // TODO(tomek): log exception, show help
+    rethrow;
+  }
 }
