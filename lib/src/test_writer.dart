@@ -6,7 +6,7 @@ class TestWriter {
 
   final FileSystem _fileSystem;
 
-  Future<void> generateMainTest({
+  Future<int> generateMainTest({
     required String directory,
     required String fileName,
   }) async {
@@ -22,10 +22,14 @@ class TestWriter {
         .map((f) => f.replaceAll(r'\', '/'))
         .map((f) => f[0] == '/' ? f.substring(1) : f)
         .toList();
-    final content = template
-        .replaceFirst('<<imports>>', _imports(files).join('\n'))
-        .replaceFirst('<<main body>>', _mains(files).join('\n'));
-    await _fileSystem.createFile(Uri.file(path), content: content);
+    if (files.isNotEmpty) {
+      final content = template
+          .replaceFirst('<<imports>>', _imports(files).join('\n'))
+          .replaceFirst('<<main body>>', _mains(files).join('\n'));
+      await _fileSystem.createFile(Uri.file(path), content: content);
+    }
+
+    return files.length;
   }
 
   Iterable<String> _imports(List<String> files) sync* {
