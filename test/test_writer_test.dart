@@ -11,6 +11,21 @@ void main() {
       fileSystem = _MockFileSystem();
     });
 
+    group('none', () {
+      test('when no tests found', () async {
+        fileSystem
+          ..mockGetFiles = []
+          ..mockGetCurrentDir = '';
+
+        final result  = await TestWriter(fileSystem).generateMainTest(
+          directory: '/',
+          fileName: 'main_tests.dart',
+        );
+
+        expect(result, 0);
+        expect(fileSystem.mockCreateFile, isNull);
+      });
+    });
     group('single', () {
       const content = '''
 // ignore_for_file: directives_ordering
@@ -37,6 +52,19 @@ void main() {
         );
 
         expect(fileSystem.mockCreateFile, content);
+      });
+
+      test('returns number of test files found', ()  async {
+        fileSystem
+          ..mockGetFiles = ['simple_test.dart']
+          ..mockGetCurrentDir = '';
+
+        final result = await TestWriter(fileSystem).generateMainTest(
+          directory: '/',
+          fileName: 'main_tests.dart',
+        );
+
+        expect(result, 1);
       });
 
       test(
@@ -143,7 +171,7 @@ void main() {
 }
 
 class _MockFileSystem implements FileSystem {
-  late String mockCreateFile;
+  String? mockCreateFile;
 
   @override
   Future<void> createFile(Uri file, {required String content}) async {
