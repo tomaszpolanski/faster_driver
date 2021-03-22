@@ -1,5 +1,5 @@
 import 'package:faster_driver/src/argument_parser.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('parse', () {
@@ -8,7 +8,8 @@ void main() {
       test('reads directory', () {
         const directory = '.';
 
-        final result = ArgumentParser().parse([directory]);
+        // ignore: avoid_as
+        final result = ArgumentParser().parse([directory]) as MainArgs;
 
         expect(result.directory, directory);
       });
@@ -26,18 +27,27 @@ void main() {
     group('file', () {
       test('reads file', () {
         const file = 'some_file.dart';
-
-        final result = ArgumentParser().parse(['--file', file, defaultDir]);
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse(['--file', file, defaultDir]) as MainArgs;
 
         expect(result.file, file);
       });
 
       test('file falls back to default', () {
         const file = 'main_tests.dart';
-
-        final result = ArgumentParser().parse([defaultDir]);
+        // ignore: avoid_as
+        final result = ArgumentParser().parse([defaultDir]) as MainArgs;
 
         expect(result.file, file);
+      });
+    });
+
+    group('help', () {
+      test('displays help', () {
+        final result = ArgumentParser().parse(['--help']);
+
+        expect(result, isA<HelpArgs>());
       });
     });
   });
