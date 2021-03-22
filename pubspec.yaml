@@ -1,7 +1,7 @@
 name: faster_driver
 description: A set of tool to improve Flutter Driver
 version: 0.0.1
-homepage:
+homepage: https://github.com/tomaszpolanski/faster_driver
 
 environment:
   sdk: ">=2.12.0"
