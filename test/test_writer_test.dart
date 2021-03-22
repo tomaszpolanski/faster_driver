@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:faster_driver/src/file_system.dart';
 import 'package:faster_driver/src/test_writer.dart';
 import 'package:test/test.dart';
@@ -37,21 +39,25 @@ void main() {
         expect(fileSystem.mockCreateFile, content);
       });
 
-      test('parses path properly on windows', () {
-        fileSystem
-          ..mockGetFiles = [
-            r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
-          ]
-          ..mockGetCurrentDir =
-              r'C:\Android\faster_driver\example\integration_test\';
+      test(
+        'parses path properly on windows',
+        () {
+          fileSystem
+            ..mockGetFiles = [
+              r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
+            ]
+            ..mockGetCurrentDir =
+                r'C:\Android\faster_driver\example\integration_test\';
 
-        TestWriter(fileSystem).generateMainTest(
-          directory: r'C:\Android\faster_driver\example\integration_test\',
-          fileName: 'main_tests.dart',
-        );
+          TestWriter(fileSystem).generateMainTest(
+            directory: r'C:\Android\faster_driver\example\integration_test\',
+            fileName: 'main_tests.dart',
+          );
 
-        expect(fileSystem.mockCreateFile, content);
-      });
+          expect(fileSystem.mockCreateFile, content);
+        },
+        skip: !Platform.isWindows,
+      );
 
       test('removes first slash', () {
         fileSystem
@@ -69,21 +75,25 @@ void main() {
         expect(fileSystem.mockCreateFile, content);
       });
 
-      test('removes first backslash on windows', () {
-        fileSystem
-          ..mockGetFiles = [
-            r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
-          ]
-          ..mockGetCurrentDir =
-              r'C:\Android\faster_driver\example\integration_test';
+      test(
+        'removes first backslash on windows',
+        () {
+          fileSystem
+            ..mockGetFiles = [
+              r'C:\Android\faster_driver\example\integration_test\simple_test.dart',
+            ]
+            ..mockGetCurrentDir =
+                r'C:\Android\faster_driver\example\integration_test';
 
-        TestWriter(fileSystem).generateMainTest(
-          directory: r'C:\Android\faster_driver\example\integration_test\',
-          fileName: 'main_tests.dart',
-        );
+          TestWriter(fileSystem).generateMainTest(
+            directory: r'C:\Android\faster_driver\example\integration_test\',
+            fileName: 'main_tests.dart',
+          );
 
-        expect(fileSystem.mockCreateFile, content);
-      });
+          expect(fileSystem.mockCreateFile, content);
+        },
+        skip: !Platform.isWindows,
+      );
 
       test('uses current . dir properly', () {
         fileSystem
