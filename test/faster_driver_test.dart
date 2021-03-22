@@ -22,8 +22,7 @@ void main() {
       expect(
         logger.stdoutMock,
         startsWith(
-          'This is script that merges new flutter driver tests into '
-          'one main test file.',
+          'Merges new flutter driver tests into one main test file.',
         ),
       );
     });

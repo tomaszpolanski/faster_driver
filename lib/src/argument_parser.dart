@@ -1,4 +1,5 @@
 import 'package:args/args.dart';
+import 'package:faster_driver/src/utils/colorize/colorizing.dart';
 
 class ArgumentParser {
   Args parse(List<String> args) {
@@ -33,24 +34,22 @@ class MainArgs implements Args {
 }
 
 class HelpArgs implements Args {
-  const HelpArgs(String message)
-      : message =
-            'This is script that merges new flutter driver tests into one main '
-                'test file.\n'
-                'Usage: fasterdriver <directory>\n'
-                'E.g. fasterdriver .\n\n'
-                '$message';
+  HelpArgs(String message)
+      : message = 'Merges new flutter driver tests into one main test file.\n'
+            'Usage: ${bold('fasterdriver <directory>')}\n'
+            'E.g. ${green('fasterdriver .')}\n\n'
+            '$message';
 
   final String message;
 }
+
+final String _help = '\nUse ${green('--help')} for support.';
 
 class ArgumentException implements Exception {
   ArgumentException.missingDirectory()
       : message = 'Missing root directory for tests.$_help';
 
   final String message;
-
-  static const String _help = '\nUse --help for support.';
 }
 
 const _fileArg = 'file';
@@ -66,4 +65,5 @@ ArgParser _scriptParameters = ArgParser()
     _helpArg,
     abbr: _helpArg[0],
     help: 'Displays this help',
+    negatable: false,
   );
