@@ -1,6 +1,6 @@
 # Faster Driver
 
-This is a set of scripts improving how new Flutter Driver (Integration) tests work.
+Script that merges all new Flutter Driver (Integration) tests so they can be run with a single command.
 
 ## Merging all test into one file
 If you merge all `main` methods into one file you can run all your tests with one command:
