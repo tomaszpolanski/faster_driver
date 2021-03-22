@@ -1,10 +1,11 @@
-# example
+# Faster Driver example
 
 An example to integration tests
 
 ## Getting Started
 
-Running integration  tests:
+Running integration tests:
 ```bash
-flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main_tests.dart -d linux
+fasterdriver ./integration_test
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main_tests.dart
 ```
