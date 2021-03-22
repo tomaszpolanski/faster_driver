@@ -8,7 +8,6 @@ jobs:
 
     strategy:
       matrix:
-        package: ["tool"]
         version: ["stable"]
 
     steps:
@@ -18,13 +17,10 @@ jobs:
           channel: ${{ matrix.channel }}
 
       - name: Install dependencies
-        working-directory: ${{ matrix.package }}
         run: pub get
 
       - name: Analyze
-        working-directory: ${{ matrix.package }}
         run: dart analyze
 
       - name: Run tests
-        working-directory: ${{ matrix.package }}
         run: flutter test
