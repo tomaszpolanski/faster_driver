@@ -12,7 +12,12 @@ You can create `main_tests.dart` manually or use this script to look for all the
 
 # Usage
 
-Clone the repo and active the script:
+Use pub.dev version:
+```shell
+flutter pub global activate faster_driver
+```
+
+Or clone the repo and active the script:
 ```shell
 flutter pub global activate -s path .
 ```
