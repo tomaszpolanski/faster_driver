@@ -1,5 +1,9 @@
 import 'package:example/app.dart';
-import 'package:example/routes.dart' as routes;
+import 'package:example/pages/page_1.dart';
+import 'package:example/pages/page_2.dart';
+import 'package:example/pages/page_3.dart';
+import 'package:example/pages/page_4.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -8,10 +12,10 @@ void main() {
       ...List.generate(
           20,
           (index) => [
-                routes.page1,
-                routes.page2,
-                routes.page3,
-                routes.page4,
+                Page1.route,
+                Page2.route,
+                Page3.route,
+                Page4.route,
               ]).expand((element) => element),
       // ignore: avoid_function_literals_in_foreach_calls
     ].forEach((route) {
@@ -33,10 +37,10 @@ void main() {
       ...List.generate(
           200,
           (index) => [
-                routes.page1,
-                routes.page2,
-                routes.page3,
-                routes.page4,
+                Page1.route,
+                Page2.route,
+                Page3.route,
+                Page4.route,
               ]).expand((element) => element),
       // ignore: avoid_function_literals_in_foreach_calls
     ].forEach((route) {

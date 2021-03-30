@@ -5,7 +5,6 @@ import 'package:example/pages/page_1.dart';
 import 'package:example/pages/page_2.dart';
 import 'package:example/pages/page_3.dart';
 import 'package:example/pages/page_4.dart';
-import 'package:example/routes.dart' as routes;
 import 'package:flutter/material.dart';
 
 class ExampleApp extends StatelessWidget {
@@ -15,7 +14,7 @@ class ExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final r = route ?? routes.page1;
+    final r = route ?? Page1.route;
     return MaterialApp(
       title: 'Example',
       debugShowCheckedModeBanner: false,
@@ -31,10 +30,10 @@ class ExampleApp extends StatelessWidget {
         );
       },
       routes: {
-        routes.page1: (_) => const Page1(),
-        routes.page2: (_) => const Page2(),
-        routes.page3: (_) => const Page3(),
-        routes.page4: (_) => const Page4(),
+        Page1.route: (_) => const Page1(),
+        Page2.route: (_) => const Page2(),
+        Page3.route: (_) => const Page3(),
+        Page4.route: (_) => const Page4(),
       },
     );
   }
