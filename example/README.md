@@ -6,6 +6,7 @@ An example to integration tests
 
 Running integration tests:
 ```bash
+flutter pub global activate faster_driver
 fasterdriver ./integration_test
-flutter drive --no-sound-null-safety --driver=test_driver/integration_test.dart --target=integration_test/main_tests.dart
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main_tests.dart
 ```

@@ -30,7 +30,23 @@ void main() {
     testWidgets('End to End', (tester) async {
       await tester.pumpWidget(const _HttpWidget(http.get));
 
-      await tester.pump(const Duration(seconds: 10));
+      final finder = find.text('Done');
+      for (int i = 0; i < 10; i++) {
+        await tester.pump(const Duration(seconds: 1));
+        if (findsOneWidget.matches(finder, {})) {
+          break;
+        }
+      }
+
+      expect(finder, findsOneWidget);
+    });
+
+    testWidgets('mocked', (tester) async {
+      await tester.pumpWidget(
+        _HttpWidget((url, {headers}) async => http.Response('', 200)),
+      );
+
+      await tester.pump();
 
       expect(find.text('Done'), findsOneWidget);
     });
