@@ -3,8 +3,8 @@
 An example to integration tests
 
 ## Getting Started
-
-Running integration tests:
+- Update flutter to at least `2.1.0-12.2.pre`
+- Run integration tests:
 ```bash
 flutter pub global activate faster_driver
 fasterdriver ./integration_test
