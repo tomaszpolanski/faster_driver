@@ -13,7 +13,7 @@ extension WidgetTesterEx on WidgetTester {
           firstRenderObject(find.byType(RepaintBoundary));
       final image = await boundary.toImage();
       final byteData = await image.toByteData(format: ImageByteFormat.png);
-      final pngBytes = byteData.buffer.asUint8List();
+      final pngBytes = byteData!.buffer.asUint8List();
 
       final file = await File('${Directory.current.path}/screenshots/$name.png')
           .create(recursive: true);

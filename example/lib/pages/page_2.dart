@@ -2,7 +2,7 @@ import 'package:example/pages/base_page.dart';
 import 'package:flutter/material.dart';
 
 class Page2 extends StatelessWidget {
-  const Page2({Key key}) : super(key: key);
+  const Page2({Key? key}) : super(key: key);
 
   static const route = '/page2';
 

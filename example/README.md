@@ -7,5 +7,5 @@ An example to integration tests
 Running integration tests:
 ```bash
 fasterdriver ./integration_test
-flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main_tests.dart
+flutter drive --no-sound-null-safety --driver=test_driver/integration_test.dart --target=integration_test/main_tests.dart
 ```
