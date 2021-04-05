@@ -2,7 +2,6 @@ library faster_driver;
 
 import 'package:cli_util/cli_logging.dart';
 import 'package:faster_driver/src/argument_parser.dart';
-import 'package:faster_driver/src/file_system.dart';
 import 'package:faster_driver/src/test_writer.dart';
 import 'package:faster_driver/src/utils/colorize/colorizing.dart';
 

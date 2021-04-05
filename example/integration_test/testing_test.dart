@@ -3,7 +3,6 @@ import 'package:example/pages/page_1.dart';
 import 'package:example/pages/page_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:http/http.dart' as http;
 
 void main() {
