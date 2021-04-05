@@ -40,6 +40,17 @@ void main() {
       expect(finder, findsOneWidget);
     });
 
+    testWidgets('End to End with loading', (tester) async {
+      await tester.pumpWidget(const _HttpWidget(
+        http.get,
+        loading: CircularProgressIndicator(),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Done'), findsOneWidget);
+    });
+
     testWidgets('mocked', (tester) async {
       await tester.pumpWidget(
         _HttpWidget((url, {headers}) async => http.Response('', 200)),
@@ -58,9 +69,14 @@ typedef GetCall = Future<http.Response> Function(
 });
 
 class _HttpWidget extends StatelessWidget {
-  const _HttpWidget(this.httpGet, {Key? key}) : super(key: key);
+  const _HttpWidget(
+    this.httpGet, {
+    this.loading,
+    Key? key,
+  }) : super(key: key);
 
   final GetCall httpGet;
+  final Widget? loading;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +87,7 @@ class _HttpWidget extends StatelessWidget {
         builder: (context, sn) {
           return sn.connectionState == ConnectionState.done
               ? const Text('Done')
-              : const Text('Waiting');
+              : loading ?? const Text('Waiting');
         },
       ),
     );
