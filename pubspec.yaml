@@ -1,6 +1,6 @@
 name: faster_driver
-description: A set of tool to improve Flutter Driver
-version: 0.0.2
+description: Script(s) to improve Integration Tests. Allows merging all the Integration tests into one file to run all tests at once
+version: 0.0.2+1
 homepage: https://github.com/tomaszpolanski/faster_driver
 
 environment:
