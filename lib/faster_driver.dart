@@ -5,6 +5,7 @@ import 'package:faster_driver/src/argument_parser.dart';
 import 'package:faster_driver/src/test_writer.dart';
 import 'package:faster_driver/src/utils/colorize/colorizing.dart';
 
+/// Starts up the script.
 Future<void> run(
   List<String> args, {
   required Logger logger,
