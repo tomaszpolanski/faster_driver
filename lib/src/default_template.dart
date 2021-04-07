@@ -8,9 +8,6 @@ import 'package:integration_test/integration_test.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  /// This is the template for single name line:
-  /// test.main(<<arguments>>);
-  /// 
-<<main body>>
+  <<test.main({{arguments}});>>
 }
 ''';

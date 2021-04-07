@@ -26,6 +26,7 @@ class TestWriter {
     if (files.isNotEmpty) {
       final content = template
           .replaceFirst('<<imports>>', _imports(files).join('\n'))
+          .replaceFirst('<<args>>', '')
           .replaceFirst('<<main body>>', _mains(files).join('\n'));
       await _fileSystem.createFile(Uri.file(path), content: content);
     }
