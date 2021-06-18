@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:faster_driver/src/file_system.dart';
 import 'package:path/path.dart' as p;
 
@@ -10,7 +12,7 @@ class TestWriter {
     required String directory,
     required String fileName,
     required List<String> arguments,
-    String template = defaultTemplate,
+    String? templateOrPath,
   }) async {
     final path = p.join(directory, fileName);
     final root = p.canonicalize(_fileSystem.getCurrentDir(path));
@@ -24,6 +26,7 @@ class TestWriter {
         .map((f) => f.replaceAll(r'\', '/'))
         .map((f) => f[0] == '/' ? f.substring(1) : f)
         .toList();
+    final template = _template(templateOrPath);
     if (files.isNotEmpty) {
       final expressions = template
           .split('\n')
@@ -49,6 +52,17 @@ class TestWriter {
     }
 
     return files.length;
+  }
+
+  String _template(String? templageOrPath) {
+    if (templageOrPath != null) {
+      final fullPath = _fileSystem.fullPath(templageOrPath);
+      if (fullPath != null) {
+        return File(fullPath).readAsStringSync();
+      }
+      return templageOrPath;
+    }
+    return defaultTemplate;
   }
 
   Iterable<String> _imports(List<String> files) sync* {

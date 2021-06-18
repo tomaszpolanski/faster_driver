@@ -101,7 +101,7 @@ class _MockTestWriter implements TestWriter {
     required String directory,
     required String fileName,
     required List<String> arguments,
-    String template = defaultTemplate,
+    String? templateOrPath,
   }) async {
     return generateMainTestMock;
   }

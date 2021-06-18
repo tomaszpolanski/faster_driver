@@ -96,7 +96,7 @@ void main() {
           directory: '/',
           fileName: 'main_tests.dart',
           arguments: const [arg1, arg2],
-          template: template,
+          templateOrPath: template,
         );
 
         expect(fileSystem.mockCreateFile, content);

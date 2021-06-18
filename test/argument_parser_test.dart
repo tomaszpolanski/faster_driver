@@ -43,6 +43,18 @@ void main() {
       });
     });
 
+    group('template', () {
+      test('reads template', () {
+        const template = 'some_file.txt';
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse(['--template', template, defaultDir])
+                as MainArgs;
+
+        expect(result.template, template);
+      });
+    });
+
     group('test arguments', () {
       test('reads test arguments', () {
         const argument = 'argument.dart';

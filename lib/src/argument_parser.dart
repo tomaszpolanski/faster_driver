@@ -17,6 +17,7 @@ class ArgumentParser {
     return MainArgs(
       directory: dir,
       file: params[_fileArg],
+      template: params[_templateArg],
       testArguments: params.wasParsed(_testArgumentsArg)
           ? _splitTestArguments(params[_testArgumentsArg])
           : [],
@@ -35,11 +36,13 @@ class MainArgs implements Args {
     required this.directory,
     required this.file,
     required this.testArguments,
+    required this.template,
   });
 
   final String directory;
   final String file;
   final List<String> testArguments;
+  final String? template;
 }
 
 class HelpArgs implements Args {
@@ -62,6 +65,7 @@ class ArgumentException implements Exception {
 }
 
 const _fileArg = 'file';
+const _templateArg = 'template';
 const _helpArg = 'help';
 const _testArgumentsArg = 'test-args';
 ArgParser _scriptParameters = ArgParser()
@@ -74,6 +78,10 @@ ArgParser _scriptParameters = ArgParser()
   ..addOption(
     _testArgumentsArg,
     help: 'Specifies arguments passed to tests',
+  )
+  ..addOption(
+    _templateArg,
+    help: 'Template for aggregated test file',
   )
   ..addFlag(
     _helpArg,
