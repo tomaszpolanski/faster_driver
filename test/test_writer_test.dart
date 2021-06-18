@@ -20,6 +20,7 @@ void main() {
         final result = await TestWriter(fileSystem).generateMainTest(
           directory: '/',
           fileName: 'main_tests.dart',
+          arguments: const [],
         );
 
         expect(result, 0);
@@ -53,6 +54,7 @@ void main() {
         TestWriter(fileSystem).generateMainTest(
           directory: '/',
           fileName: 'main_tests.dart',
+          arguments: const [arg1, arg2],
         );
 
         expect(fileSystem.mockCreateFile, content);
@@ -83,6 +85,7 @@ void main() {
         TestWriter(fileSystem).generateMainTest(
           directory: '/',
           fileName: 'main_tests.dart',
+          arguments: const [],
         );
 
         expect(fileSystem.mockCreateFile, content);
@@ -96,6 +99,7 @@ void main() {
         final result = await TestWriter(fileSystem).generateMainTest(
           directory: '/',
           fileName: 'main_tests.dart',
+          arguments: const [],
         );
 
         expect(result, 1);
@@ -114,6 +118,7 @@ void main() {
           TestWriter(fileSystem).generateMainTest(
             directory: r'C:\Android\faster_driver\example\integration_test\',
             fileName: 'main_tests.dart',
+            arguments: const [],
           );
 
           expect(fileSystem.mockCreateFile, content);
@@ -132,6 +137,7 @@ void main() {
           directory:
               '/home/tomek/Documents/GitHub/faster_driver/example/integration_test/',
           fileName: 'main_tests.dart',
+          arguments: const [],
         );
 
         expect(fileSystem.mockCreateFile, content);
@@ -150,6 +156,7 @@ void main() {
           TestWriter(fileSystem).generateMainTest(
             directory: r'C:\Android\faster_driver\example\integration_test\',
             fileName: 'main_tests.dart',
+            arguments: const [],
           );
 
           expect(fileSystem.mockCreateFile, content);
@@ -167,6 +174,7 @@ void main() {
         TestWriter(fileSystem).generateMainTest(
           directory: '.',
           fileName: 'main_tests.dart',
+          arguments: const [],
         );
 
         expect(fileSystem.mockCreateFile, content);
@@ -197,8 +205,11 @@ void main() {
         ]
         ..mockGetCurrentDir = '';
 
-      TestWriter(fileSystem)
-          .generateMainTest(directory: '.', fileName: 'main_tests.dart');
+      TestWriter(fileSystem).generateMainTest(
+        directory: '.',
+        fileName: 'main_tests.dart',
+        arguments: const [],
+      );
 
       expect(fileSystem.mockCreateFile, content);
     });

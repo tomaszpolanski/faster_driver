@@ -9,6 +9,7 @@ class TestWriter {
   Future<int> generateMainTest({
     required String directory,
     required String fileName,
+    required List<String> arguments,
   }) async {
     final path = p.join(directory, fileName);
     final root = p.canonicalize(_fileSystem.getCurrentDir(path));
@@ -24,9 +25,9 @@ class TestWriter {
         .toList();
     if (files.isNotEmpty) {
       final content = template
-          .replaceFirst('<<imports>>', _imports(files).join('\n'))
-          .replaceFirst('<<arguments>>', '[]')
-          .replaceFirst('<<main body>>', _mains(files).join('\n'));
+          .replaceFirst('<imports/>', _imports(files).join('\n'))
+          .replaceFirst('<arguments/>', _arguments(arguments))
+          .replaceFirst('<main body/>', _mains(files).join('\n'));
       await _fileSystem.createFile(Uri.file(path), content: content);
     }
 
@@ -47,6 +48,12 @@ class TestWriter {
       yield '  ${_testName(file)}.main();';
     }
   }
+
+  String _arguments(List<String> arguments) {
+    return arguments.isEmpty
+        ? '[]'
+        : '[${arguments.map((a) => "'$a'").join(', ')}]';
+  }
 }
 
 const template = '''
@@ -55,11 +62,11 @@ const template = '''
 /// to source control
 import 'package:integration_test/integration_test.dart';
 
-<<imports>>
+<imports/>
 
 void main() {
-  final List<String> args = <<arguments>>;
+  final List<String> args = <arguments/>;
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-<<main body>>
+<main body/>
 }
 ''';
