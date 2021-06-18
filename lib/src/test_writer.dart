@@ -25,6 +25,7 @@ class TestWriter {
     if (files.isNotEmpty) {
       final content = template
           .replaceFirst('<<imports>>', _imports(files).join('\n'))
+          .replaceFirst('<<arguments>>', '[]')
           .replaceFirst('<<main body>>', _mains(files).join('\n'));
       await _fileSystem.createFile(Uri.file(path), content: content);
     }
@@ -57,6 +58,7 @@ import 'package:integration_test/integration_test.dart';
 <<imports>>
 
 void main() {
+  final List<String> args = <<arguments>>;
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 <<main body>>
 }

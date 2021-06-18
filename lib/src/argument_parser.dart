@@ -18,9 +18,13 @@ class ArgumentParser {
       directory: dir,
       file: params[_fileArg],
       testArguments: params.wasParsed(_testArgumentsArg)
-          ? [params[_testArgumentsArg]]
+          ? _splitTestArguments(params[_testArgumentsArg])
           : [],
     );
+  }
+
+  List<String> _splitTestArguments(String args) {
+    return args.split(' ');
   }
 }
 
