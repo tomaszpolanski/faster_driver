@@ -54,13 +54,13 @@ class TestWriter {
     return files.length;
   }
 
-  String _template(String? templageOrPath) {
-    if (templageOrPath != null) {
-      final fullPath = _fileSystem.fullPath(templageOrPath);
+  String _template(String? templateOrPath) {
+    if (templateOrPath != null) {
+      final fullPath = _fileSystem.fullPath(templateOrPath);
       if (fullPath != null) {
         return File(fullPath).readAsStringSync();
       }
-      return templageOrPath;
+      return templateOrPath;
     }
     return defaultTemplate;
   }
