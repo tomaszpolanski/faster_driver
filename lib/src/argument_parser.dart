@@ -3,7 +3,7 @@ import 'package:faster_driver/src/utils/colorize/colorizing.dart';
 
 class ArgumentParser {
   Args parse(List<String> args) {
-    final params = _scriptParameters.parse(args);
+    final params = _parse(args);
 
     if (params[_helpArg] == true) {
       return HelpArgs(_scriptParameters.usage);
@@ -22,6 +22,14 @@ class ArgumentParser {
           ? _splitTestArguments(params[_testArgumentsArg])
           : [],
     );
+  }
+
+  ArgResults _parse(List<String> args) {
+    try {
+      return _scriptParameters.parse(args);
+    } on FormatException catch (e) {
+      throw ArgumentException.unknownArguments(args, e);
+    }
   }
 
   List<String> _splitTestArguments(String args) {
@@ -89,6 +97,9 @@ final String _help = '\nUse ${green('--help')} for support.';
 class ArgumentException implements Exception {
   ArgumentException.missingDirectory()
       : message = 'Missing root directory for tests.$_help';
+
+  ArgumentException.unknownArguments(List<String> args, FormatException e)
+      : message = 'Unknown arguments in $args\n$e';
 
   final String message;
 }

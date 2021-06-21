@@ -56,6 +56,16 @@ void main() {
     });
 
     group('test arguments', () {
+      test('throws exception when unknown argument', () {
+        final exception = throws<ArgumentException>(
+          () => ArgumentParser().parse(['--unknown']),
+        );
+
+        expect(exception, isA<ArgumentException>());
+        final ArgumentException e = exception!;
+        expect(e.message, startsWith('Unknown arguments in'));
+      });
+
       test('reads test arguments', () {
         const argument = 'argument.dart';
         final result =

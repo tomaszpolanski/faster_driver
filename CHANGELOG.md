@@ -1,8 +1,12 @@
+## 0.0.3+1
+* Better logging when mismatching arguments
+
 ## 0.0.3
-* Allowing passing arguments and template
-In case you want to pass specyfic arguments to your tests, now you can do it.
-You can specyfi the template of `main_tests.dart` file by passing template file
-via `--template` option. An exmaple of template could look like this:
+* Allowing passing arguments and templates 
+
+In case you want to pass specific arguments to your tests, now you can do it.
+You can specify the template of `main_tests.dart` file by passing the template file
+via the `--template` option. An example of template could look like this:
 ```dart
 #{{main-body}} =   {{import-name}}.main(args);
 // ignore_for_file: directives_ordering
