@@ -79,6 +79,20 @@ void main() {
 
         expect(result.testArguments, [argument1, argument2]);
       });
+
+      test('reads complex arguments', () {
+        const argument1 = 'argument1';
+        const argument2 = 'argument2 argument3';
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse([
+          defaultDir,
+          '--test-args',
+          '$argument1 "$argument2"',
+        ]) as MainArgs;
+
+        expect(result.testArguments, [argument1, argument2]);
+      });
     });
 
     group('help', () {

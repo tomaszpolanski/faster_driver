@@ -25,8 +25,37 @@ class ArgumentParser {
   }
 
   List<String> _splitTestArguments(String args) {
-    return args.split(' ');
+    return _split(args, '"')
+        .expand(
+          (split) => split.contained
+              ? [split.value] //
+              : split.value.split(' '),
+        )
+        .where((str) => str.isNotEmpty)
+        .toList(growable: false);
   }
+
+  Iterable<Split> _split(String str, String separator) sync* {
+    String current = '';
+    bool contained = false;
+    for (final rune in str.runes) {
+      final char = String.fromCharCode(rune);
+      if (char == separator) {
+        yield Split(current, contained: contained);
+        current = '';
+        contained = !contained;
+      } else {
+        current += char;
+      }
+    }
+    yield Split(current, contained: contained);
+  }
+}
+
+class Split {
+  const Split(this.value, {required this.contained});
+  final String value;
+  final bool contained;
 }
 
 abstract class Args {}
