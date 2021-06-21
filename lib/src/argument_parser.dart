@@ -17,8 +17,45 @@ class ArgumentParser {
     return MainArgs(
       directory: dir,
       file: params[_fileArg],
+      template: params[_templateArg],
+      testArguments: params.wasParsed(_testArgumentsArg)
+          ? _splitTestArguments(params[_testArgumentsArg])
+          : [],
     );
   }
+
+  List<String> _splitTestArguments(String args) {
+    return _split(args, '"')
+        .expand(
+          (split) => split.contained
+              ? [split.value] //
+              : split.value.split(' '),
+        )
+        .where((str) => str.isNotEmpty)
+        .toList(growable: false);
+  }
+
+  Iterable<Split> _split(String str, String separator) sync* {
+    String current = '';
+    bool contained = false;
+    for (final rune in str.runes) {
+      final char = String.fromCharCode(rune);
+      if (char == separator) {
+        yield Split(current, contained: contained);
+        current = '';
+        contained = !contained;
+      } else {
+        current += char;
+      }
+    }
+    yield Split(current, contained: contained);
+  }
+}
+
+class Split {
+  const Split(this.value, {required this.contained});
+  final String value;
+  final bool contained;
 }
 
 abstract class Args {}
@@ -27,10 +64,14 @@ class MainArgs implements Args {
   const MainArgs({
     required this.directory,
     required this.file,
+    required this.testArguments,
+    required this.template,
   });
 
   final String directory;
   final String file;
+  final List<String> testArguments;
+  final String? template;
 }
 
 class HelpArgs implements Args {
@@ -53,13 +94,23 @@ class ArgumentException implements Exception {
 }
 
 const _fileArg = 'file';
+const _templateArg = 'template';
 const _helpArg = 'help';
+const _testArgumentsArg = 'test-args';
 ArgParser _scriptParameters = ArgParser()
   ..addOption(
     _fileArg,
     abbr: _fileArg[0],
     help: 'Specifies aggregated file name to be generated',
     defaultsTo: 'main_tests.dart',
+  )
+  ..addOption(
+    _testArgumentsArg,
+    help: 'Specifies arguments passed to tests',
+  )
+  ..addOption(
+    _templateArg,
+    help: 'Template for aggregated test file',
   )
   ..addFlag(
     _helpArg,

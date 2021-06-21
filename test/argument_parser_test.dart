@@ -43,6 +43,58 @@ void main() {
       });
     });
 
+    group('template', () {
+      test('reads template', () {
+        const template = 'some_file.txt';
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse(['--template', template, defaultDir])
+                as MainArgs;
+
+        expect(result.template, template);
+      });
+    });
+
+    group('test arguments', () {
+      test('reads test arguments', () {
+        const argument = 'argument.dart';
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse([defaultDir, '--test-args', argument])
+                as MainArgs;
+
+        expect(result.testArguments, [argument]);
+      });
+
+      test('reads multiple arguments', () {
+        const argument1 = 'argument1';
+        const argument2 = 'argument2';
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse([
+          defaultDir,
+          '--test-args',
+          '$argument1 $argument2',
+        ]) as MainArgs;
+
+        expect(result.testArguments, [argument1, argument2]);
+      });
+
+      test('reads complex arguments', () {
+        const argument1 = 'argument1';
+        const argument2 = 'argument2 argument3';
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse([
+          defaultDir,
+          '--test-args',
+          '$argument1 "$argument2"',
+        ]) as MainArgs;
+
+        expect(result.testArguments, [argument1, argument2]);
+      });
+    });
+
     group('help', () {
       test('displays help', () {
         final result = ArgumentParser().parse(['--help']);

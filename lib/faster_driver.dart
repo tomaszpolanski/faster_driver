@@ -20,6 +20,8 @@ Future<void> run(
       final testFileCount = await testWriter.generateMainTest(
         directory: arguments.directory,
         fileName: arguments.file,
+        arguments: arguments.testArguments,
+        templateOrPath: arguments.template,
       );
       if (testFileCount != 0) {
         logger.stdout(

@@ -100,6 +100,8 @@ class _MockTestWriter implements TestWriter {
   Future<int> generateMainTest({
     required String directory,
     required String fileName,
+    required List<String> arguments,
+    String? templateOrPath,
   }) async {
     return generateMainTestMock;
   }
