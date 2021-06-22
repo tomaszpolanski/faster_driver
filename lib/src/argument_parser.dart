@@ -2,8 +2,12 @@ import 'package:args/args.dart';
 import 'package:faster_driver/src/utils/colorize/colorizing.dart';
 
 class ArgumentParser {
+  static const separator = ',,,';
   Args parse(List<String> args) {
-    final params = _parse(args);
+    final separated = args
+        .map((a) => a.replaceAll(separator, ' ')) //
+        .toList(growable: false);
+    final params = _parse(separated);
 
     if (params[_helpArg] == true) {
       return HelpArgs(_scriptParameters.usage);

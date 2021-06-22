@@ -103,6 +103,20 @@ void main() {
 
         expect(result.testArguments, [argument1, argument2]);
       });
+
+      test('complex arguments can be passed with special character', () {
+        const argument1 = 'argument1';
+        const argument2 = 'argument2';
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse([
+          defaultDir,
+          '--test-args',
+          '$argument1${ArgumentParser.separator}$argument2',
+        ]) as MainArgs;
+
+        expect(result.testArguments, [argument1, argument2]);
+      });
     });
 
     group('help', () {
