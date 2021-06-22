@@ -1,7 +1,6 @@
-## 0.0.3+1
+## 0.0.3+2
 * Due to limitations of some dockerized CI systems that cannot handle complex
 arguments with `""`, you can pass complex argument concatenated with `,,,`
-
 
 ## 0.0.3+1
 * Better logging when mismatching arguments
