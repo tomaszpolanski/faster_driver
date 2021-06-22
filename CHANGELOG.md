@@ -1,8 +1,13 @@
 ## 0.0.3+1
+* Due to limitations of some dockerized CI systems that cannot handle complex
+arguments with `""`, you can pass complex argument concatenated with `,,,`
+
+
+## 0.0.3+1
 * Better logging when mismatching arguments
 
 ## 0.0.3
-* Allowing passing arguments and templates 
+* Allowing passing arguments and templates
 
 In case you want to pass specific arguments to your tests, now you can do it.
 You can specify the template of `main_tests.dart` file by passing the template file
