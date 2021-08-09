@@ -1,3 +1,6 @@
+## 0.0.4
+* Sorting created imports and test name by name to have consistent order between platforms
+
 ## 0.0.3+2
 * Due to limitations of some dockerized CI systems that cannot handle complex
 arguments with `""`, you can pass complex argument concatenated with `,,,`
