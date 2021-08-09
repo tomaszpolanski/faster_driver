@@ -25,7 +25,8 @@ class TestWriter {
         .map((f) => p.relative(f, from: root))
         .map((f) => f.replaceAll(r'\', '/'))
         .map((f) => f[0] == '/' ? f.substring(1) : f)
-        .toList();
+        .toList()
+          ..sort((a, b) => a.compareTo(b));
     final template = _template(templateOrPath);
     if (files.isNotEmpty) {
       final expressions = template

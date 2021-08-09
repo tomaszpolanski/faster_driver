@@ -1,6 +1,6 @@
 name: faster_driver
 description: Script(s) to improve Integration Tests. Allows merging all the Integration tests into one file to run all tests at once
-version: 0.0.3+2
+version: 0.1.0
 homepage: https://github.com/tomaszpolanski/faster_driver
 
 environment:
