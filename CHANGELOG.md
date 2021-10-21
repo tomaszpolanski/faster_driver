@@ -1,3 +1,6 @@
+## 0.1.1
+* Adding possibility to only aggregate test files from a specific folder
+
 ## 0.1.0
 * [MINOR BREAKING CHANGE] Sorting created imports and test name by name to have consistent order between platforms.
 This is a breaking changes as the observed behavior changes
