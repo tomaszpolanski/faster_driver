@@ -37,4 +37,8 @@ class FileSystem {
     final f = File.fromUri(file).openWrite()..writeln(content);
     await f.close();
   }
+
+  bool existsSync(String path) {
+    return File(path).existsSync();
+  }
 }
