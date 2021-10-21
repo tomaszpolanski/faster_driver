@@ -292,6 +292,7 @@ void main() {
 
 class _MockFileSystem implements FileSystem {
   String? mockCreateFile;
+  bool exists = true;
 
   @override
   Future<void> createFile(Uri file, {required String content}) async {
@@ -319,5 +320,10 @@ class _MockFileSystem implements FileSystem {
   @override
   String? fullPath(String path) {
     return null;
+  }
+
+  @override
+  bool existsSync(String path) {
+    return exists;
   }
 }

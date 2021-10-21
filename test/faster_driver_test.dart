@@ -1,7 +1,7 @@
 import 'package:cli_util/cli_logging.dart';
 import 'package:faster_driver/faster_driver.dart';
-import 'package:test/test.dart';
 import 'package:faster_driver/src/test_writer.dart';
+import 'package:test/test.dart';
 
 void main() {
   late _MockLogger logger;

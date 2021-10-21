@@ -14,8 +14,12 @@ class TestWriter {
     required List<String> arguments,
     String? templateOrPath,
   }) async {
-    final path = p.join(directory, fileName);
-    final root = p.canonicalize(_fileSystem.getCurrentDir(path));
+    var path = p.join(directory, fileName);
+    var root = p.canonicalize(_fileSystem.getCurrentDir(path));
+    if (!_fileSystem.existsSync(path)) {
+      path = fileName;
+      root = directory;
+    }
 
     final files = _fileSystem
         .getFiles(
@@ -26,7 +30,7 @@ class TestWriter {
         .map((f) => f.replaceAll(r'\', '/'))
         .map((f) => f[0] == '/' ? f.substring(1) : f)
         .toList()
-          ..sort((a, b) => a.compareTo(b));
+      ..sort((a, b) => a.compareTo(b));
     final template = _template(templateOrPath);
     if (files.isNotEmpty) {
       final expressions = template
