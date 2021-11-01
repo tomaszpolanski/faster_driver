@@ -1,3 +1,6 @@
+## 0.1.2
+* Improving the ability to specify a single inner folder with tests
+
 ## 0.1.1
 * Adding possibility to only aggregate test files from a specific folder
 

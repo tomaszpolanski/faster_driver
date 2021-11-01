@@ -16,9 +16,12 @@ class TestWriter {
   }) async {
     var path = p.join(directory, fileName);
     var root = p.canonicalize(_fileSystem.getCurrentDir(path));
+    String? relativeRoot;
+
     if (!_fileSystem.existsSync(path)) {
-      path = fileName;
-      root = directory;
+      path = p.canonicalize(_fileSystem.fullPath(fileName)!);
+      root = p.canonicalize(_fileSystem.fullPath(directory)!);
+      relativeRoot = _fileSystem.getCurrentDir(path);
     }
 
     final files = _fileSystem
@@ -26,7 +29,7 @@ class TestWriter {
           Uri.directory(root),
           predicate: (path) => path.contains('_test.dart'),
         )
-        .map((f) => p.relative(f, from: root))
+        .map((f) => p.relative(f, from: relativeRoot ?? root))
         .map((f) => f.replaceAll(r'\', '/'))
         .map((f) => f[0] == '/' ? f.substring(1) : f)
         .toList()
