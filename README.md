@@ -24,6 +24,7 @@ flutter pub global activate -s path .
 
 Run the command by passing the root of your existing integration tests:
 ```shell
+cd example
 fasterdriver ./integration_test
 ```
 
