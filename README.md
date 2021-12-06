@@ -22,7 +22,7 @@ Or clone the repo and active the script:
 flutter pub global activate -s path .
 ```
 
-Run the command by passing the root of your integration tests:
+Run the command by passing the root of your existing integration tests:
 ```shell
 fasterdriver ./integration_test
 ```
