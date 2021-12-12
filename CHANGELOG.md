@@ -1,3 +1,6 @@
+## 0.1.2+1
+* [FIX] Fixing issue that required `main_tests.dart` to be already available otherwise it crashed - thanks @lhimo for reporting
+
 ## 0.1.2
 * Improving the ability to specify a single inner folder with tests
 
