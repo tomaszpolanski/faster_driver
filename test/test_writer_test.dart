@@ -118,6 +118,21 @@ void main() {
 }
 ''';
 
+      test('dont crash when missing path', () {
+        fileSystem
+          ..mockGetFiles = ['simple_test.dart']
+          ..mockGetCurrentDir = ''
+          ..exists = false;
+
+        TestWriter(fileSystem).generateMainTest(
+          directory: '/',
+          fileName: 'main_tests.dart',
+          arguments: const [],
+        );
+
+        expect(fileSystem.mockCreateFile, content);
+      });
+
       test('writes single test', () {
         fileSystem
           ..mockGetFiles = ['simple_test.dart']

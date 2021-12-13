@@ -19,9 +19,13 @@ class TestWriter {
     String? relativeRoot;
 
     if (!_fileSystem.existsSync(path)) {
-      path = p.canonicalize(_fileSystem.fullPath(fileName)!);
-      root = p.canonicalize(_fileSystem.fullPath(directory)!);
-      relativeRoot = _fileSystem.getCurrentDir(path);
+      final singlePath = _fileSystem.fullPath(fileName);
+      final singleRoot = _fileSystem.fullPath(directory);
+      if (singlePath != null && singleRoot != null) {
+        path = p.canonicalize(singlePath);
+        root = p.canonicalize(singleRoot);
+        relativeRoot = _fileSystem.getCurrentDir(path);
+      }
     }
 
     final files = _fileSystem
@@ -120,6 +124,7 @@ void main() {
 
 class Expression {
   const Expression(this.tag, this.value);
+
   final String tag;
   final String value;
 
