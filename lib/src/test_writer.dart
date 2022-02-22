@@ -46,7 +46,7 @@ class TestWriter {
       await _writeTests(template, shards, arguments, path);
     }
 
-    return files.length;
+    return shards.length;
   }
 
   Future<void> _writeTests(
