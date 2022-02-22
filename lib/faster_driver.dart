@@ -22,6 +22,7 @@ Future<void> run(
         fileName: arguments.file,
         arguments: arguments.testArguments,
         templateOrPath: arguments.template,
+        shard: arguments.shard,
       );
       if (testFileCount != 0) {
         logger.stdout(
