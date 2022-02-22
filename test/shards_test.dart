@@ -7,7 +7,7 @@ void main() {
     test('total shards cannot be smaller than 1', () {
       const shards = 0;
       final exception = throws<ArgumentException>(
-        () => const Shard([], totalShards: shards).split(0),
+        () => Shard.from(totalShards: shards, shardIndex: 0),
       );
 
       expect(
@@ -18,7 +18,7 @@ void main() {
 
     test('when total shard is 1', () {
       final exception = throws<ArgumentException>(
-        () => const Shard([], totalShards: 1).split(0),
+        () => Shard.from(totalShards: 1, shardIndex: 0),
       );
 
       expect(exception, isNull);
@@ -30,7 +30,7 @@ void main() {
       const shards = 1;
       const index = shards;
       final exception = throws<ArgumentException>(
-        () => const Shard([], totalShards: shards).split(index),
+        () => Shard.from(totalShards: shards, shardIndex: index),
       );
 
       expect(
@@ -44,7 +44,7 @@ void main() {
       const shards = 1;
       const index = -1;
       final exception = throws<ArgumentException>(
-        () => const Shard([], totalShards: shards).split(index),
+        () => Shard.from(totalShards: shards, shardIndex: index),
       );
 
       expect(
@@ -56,19 +56,19 @@ void main() {
 
     test('return entire list when only one shard', () {
       const expected = [1];
-      final result = const Shard(expected, totalShards: 1).split(0);
+      final result = Shard.from(totalShards: 1, shardIndex: 0).split(expected);
 
       expect(result, expected);
     });
 
     test('return split shard when event', () {
-      final result = const Shard([1, 2], totalShards: 2).split(1);
+      final result = Shard.from(totalShards: 2, shardIndex: 1).split([1, 2]);
 
       expect(result, hasLength(1));
       expect(result, contains(2));
     });
     group('return split shard when not event', () {
-      const tested = Shard([1, 2, 3, 4], totalShards: 3);
+      const list = [1, 2, 3, 4];
 
       <int, List<int>>{
         0: [1],
@@ -76,7 +76,8 @@ void main() {
         2: [3, 4],
       }.forEach((index, shard) {
         test('for index $index', () {
-          final result = tested.split(index);
+          final result =
+              Shard.from(totalShards: 3, shardIndex: index).split(list);
 
           expect(result, containsAll(shard));
           expect(result, hasLength(shard.length));

@@ -1,15 +1,15 @@
 import 'package:faster_driver/src/argument_parser.dart';
 
-class Shard<T> {
-  const Shard(
-    this.list, {
+class Shard {
+  const Shard._({
     required this.totalShards,
+    required this.shardIndex,
   });
 
-  final List<T> list;
-  final int totalShards;
-
-  List<T> split(int shardIndex) {
+  factory Shard.from({
+    required int totalShards,
+    required int shardIndex,
+  }) {
     if (totalShards < 1) {
       throw ArgumentException.shardInvalidTotal(totalShards);
     }
@@ -19,6 +19,13 @@ class Shard<T> {
         index: shardIndex,
       );
     }
+    return Shard._(totalShards: totalShards, shardIndex: shardIndex);
+  }
+
+  final int totalShards;
+  final int shardIndex;
+
+  List<T> split<T>(List<T> list) {
     final shardLength = list.length ~/ totalShards;
 
     final offsetList = list.skip(shardIndex * shardLength);
