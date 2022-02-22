@@ -119,6 +119,49 @@ void main() {
       });
     });
 
+    group('shards', () {
+      test('when only total is passed then complain', () {
+        final exception =
+            throws<ArgumentException>(() => ArgumentParser().parse(
+                  ['--total-shards', '1', defaultDir],
+                ));
+
+        expect(
+          exception?.message,
+          ArgumentException.shardMissingShardArgument().message,
+        );
+      });
+
+      test('when only index is passed then complain', () {
+        final exception =
+            throws<ArgumentException>(() => ArgumentParser().parse(
+                  ['--shard-index', '1', defaultDir],
+                ));
+
+        expect(
+          exception?.message,
+          ArgumentException.shardMissingShardArgument().message,
+        );
+      });
+
+      test('when both shard arguments are passed then create shard', () {
+        const shards = 1;
+        const index = 0;
+        final result =
+            // ignore: avoid_as
+            ArgumentParser().parse([
+          '--total-shards',
+          '$shards',
+          '--shard-index',
+          '$index',
+          defaultDir,
+        ]) as MainArgs;
+
+        expect(result.shard?.totalShards, shards);
+        expect(result.shard?.shardIndex, index);
+      });
+    });
+
     group('help', () {
       test('displays help', () {
         final result = ArgumentParser().parse(['--help']);

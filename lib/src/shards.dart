@@ -22,6 +22,21 @@ class Shard {
     return Shard._(totalShards: totalShards, shardIndex: shardIndex);
   }
 
+  static Shard? fromString({
+    required String? totalShards,
+    required String? shardIndex,
+  }) {
+    final total = int.tryParse(totalShards ?? '');
+    final index = int.tryParse(shardIndex ?? '');
+
+    if (total != null && index != null) {
+      return Shard.from(totalShards: total, shardIndex: index);
+    } else if (total != null || index != null) {
+      throw ArgumentException.shardMissingShardArgument();
+    }
+    return null;
+  }
+
   final int totalShards;
   final int shardIndex;
 

@@ -1,4 +1,5 @@
 import 'package:args/args.dart';
+import 'package:faster_driver/src/shards.dart';
 import 'package:faster_driver/src/utils/colorize/colorizing.dart';
 
 class ArgumentParser {
@@ -26,6 +27,10 @@ class ArgumentParser {
       testArguments: params.wasParsed(_testArgumentsArg)
           ? _splitTestArguments(params[_testArgumentsArg])
           : [],
+      shard: Shard.fromString(
+        totalShards: params[_totalShardsArg],
+        shardIndex: params[_shardIndexArg],
+      ),
     );
   }
 
@@ -79,12 +84,14 @@ class MainArgs implements Args {
     required this.directory,
     required this.file,
     required this.testArguments,
+    required this.shard,
     required this.template,
   });
 
   final String directory;
   final String file;
   final List<String> testArguments;
+  final Shard? shard;
   final String? template;
 }
 
@@ -107,6 +114,10 @@ class ArgumentException implements Exception {
   ArgumentException.unknownArguments(List<String> args, FormatException e)
       : message = 'Unknown arguments in $args\n$e';
 
+  ArgumentException.shardMissingShardArgument()
+      : message = 'You have only passed one shard argument, you need to pass '
+            'both --$_totalShardsArg and --$_shardIndexArg';
+
   ArgumentException.shardInvalidTotal(int shards)
       : message = 'Total shards argument has to be 1 or greater, '
             'the current is $shards';
@@ -120,6 +131,8 @@ class ArgumentException implements Exception {
 
 const _fileArg = 'file';
 const _templateArg = 'template';
+const _totalShardsArg = 'total-shards';
+const _shardIndexArg = 'shard-index';
 const _helpArg = 'help';
 const _testArgumentsArg = 'test-args';
 ArgParser _scriptParameters = ArgParser()
@@ -136,6 +149,18 @@ ArgParser _scriptParameters = ArgParser()
   ..addOption(
     _templateArg,
     help: 'Template for aggregated test file',
+  )
+  ..addOption(
+    _totalShardsArg,
+    help: 'Tests can be sharded with the "--total-shards" and "--shard-index" '
+        'arguments, allowing you to split up your test suites '
+        'and run them separately.',
+  )
+  ..addOption(
+    _shardIndexArg,
+    help: 'Tests can be sharded with the "--total-shards" and "--shard-index" '
+        'arguments, allowing you to split up your test suites '
+        'and run them separately.',
   )
   ..addFlag(
     _helpArg,
