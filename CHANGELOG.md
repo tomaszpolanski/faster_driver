@@ -1,3 +1,13 @@
+## 0.1.3
+* Introducing test sharding.
+To shard your tests use `--total-shards` and `--shard-index`. The tests are sharded by test file.
+You can shard the example by running
+```shell
+fasterdriver --total-shards 4 --shard-index 1 ./integration_test
+```
+This will split the existing 4 tests into 4 shards (one test per shard) and only put the 2nd test into `main_tests.dart`
+
+
 ## 0.1.2+1
 * [FIX] Fixing issue that required `main_tests.dart` to be already available otherwise it crashed - thanks @lhimo for reporting
 

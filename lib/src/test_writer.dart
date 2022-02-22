@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:faster_driver/src/file_system.dart';
+import 'package:faster_driver/src/shards.dart';
 import 'package:path/path.dart' as p;
 
 class TestWriter {
@@ -12,6 +13,7 @@ class TestWriter {
     required String directory,
     required String fileName,
     required List<String> arguments,
+    Shard? shard,
     String? templateOrPath,
   }) async {
     var path = p.join(directory, fileName);
@@ -39,31 +41,40 @@ class TestWriter {
         .toList()
       ..sort((a, b) => a.compareTo(b));
     final template = _template(templateOrPath);
-    if (files.isNotEmpty) {
-      final expressions = template
-          .split('\n')
-          .where((line) => line.startsWith('#'))
-          .map(Expression.fromTemplate)
-          .where((e) => e != null)
-          .whereType<Expression>()
-          .toList();
-      Iterable<String> _line(String line) sync* {
-        yield line
-            .replaceFirst('{{imports}}', _imports(files).join('\n'))
-            .replaceFirst('{{arguments}}', _arguments(arguments))
-            .replaceFirst(
-                '{{main-body}}', _mains(files, expressions).join('\n'));
-      }
-
-      final content = template
-          .split('\n')
-          .where((line) => !line.startsWith('#'))
-          .expand(_line)
-          .join('\n');
-      await _fileSystem.createFile(Uri.file(path), content: content);
+    final shards = shard?.split(files) ?? files;
+    if (shards.isNotEmpty) {
+      await _writeTests(template, shards, arguments, path);
     }
 
-    return files.length;
+    return shards.length;
+  }
+
+  Future<void> _writeTests(
+    String template,
+    List<String> files,
+    List<String> arguments,
+    String path,
+  ) async {
+    final expressions = template
+        .split('\n')
+        .where((line) => line.startsWith('#'))
+        .map(Expression.fromTemplate)
+        .where((e) => e != null)
+        .whereType<Expression>()
+        .toList();
+    Iterable<String> _line(String line) sync* {
+      yield line
+          .replaceFirst('{{imports}}', _imports(files).join('\n'))
+          .replaceFirst('{{arguments}}', _arguments(arguments))
+          .replaceFirst('{{main-body}}', _mains(files, expressions).join('\n'));
+    }
+
+    final content = template
+        .split('\n')
+        .where((line) => !line.startsWith('#'))
+        .expand(_line)
+        .join('\n');
+    await _fileSystem.createFile(Uri.file(path), content: content);
   }
 
   String _template(String? templateOrPath) {
