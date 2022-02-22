@@ -3,6 +3,7 @@ import 'package:faster_driver/src/utils/colorize/colorizing.dart';
 
 class ArgumentParser {
   static const separator = ',,,';
+
   Args parse(List<String> args) {
     final separated = args
         .map((a) => a.replaceAll(separator, ' ')) //
@@ -66,6 +67,7 @@ class ArgumentParser {
 
 class Split {
   const Split(this.value, {required this.contained});
+
   final String value;
   final bool contained;
 }
@@ -104,6 +106,14 @@ class ArgumentException implements Exception {
 
   ArgumentException.unknownArguments(List<String> args, FormatException e)
       : message = 'Unknown arguments in $args\n$e';
+
+  ArgumentException.shardInvalidTotal(int shards)
+      : message = 'Total shards argument has to be 1 or greater, '
+            'the current is $shards';
+
+  ArgumentException.shardOutOfBounds({required int shards, required int index})
+      : message = 'The index of a shard ($index) it out of bounds. '
+            'Should be between 0 and ${shards - 1}';
 
   final String message;
 }
